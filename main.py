@@ -11,8 +11,8 @@ from awesome_lists import AwesomeLists
 
 LOGGER = logging.getLogger(__name__)
 ENV = {
-    "url": 'https://api.github.com/repos/lockys/Awesome.json \
-    /contents/all-github-path/sindresorhus-awesome.json',
+    "url": "https://api.github.com/repos/lockys/Awesome.json"\
+    "/contents/all-github-path/sindresorhus-awesome.json",
 }
 AWESOME_PROVIDER = AwesomeLists(ENV["url"], LOGGER)
 
