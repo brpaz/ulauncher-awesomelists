@@ -14,6 +14,12 @@
             "type": "keyword",
             "name": "Awesome Lists",
             "default_value": "aw"
+        },
+        {
+            "id": "github_access_token",
+            "type": "input",
+            "name": "Your GitHub access_token [We use token to fetch the lists].",
+            "default_value": ""
         }
     ]
 }
