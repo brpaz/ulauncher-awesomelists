@@ -30,6 +30,7 @@ class AwesomeListsExtension(Extension):
 class KeywordQueryEventListener(EventListener):
     """Ulauncher Event Listener"""
 
+    ## pylint: disable=unused-argument
     def on_event(self, event, extension):
         """React to user input"""
         items = []
