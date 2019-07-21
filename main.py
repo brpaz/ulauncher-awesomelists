@@ -11,8 +11,7 @@ from awesome_lists import AwesomeLists
 
 LOGGER = logging.getLogger(__name__)
 ENV = {
-    "url": "https://api.github.com/repos/lockys/Awesome.json"\
-    "/contents/all-github-path/sindresorhus-awesome.json",
+    "url": "https://raw.githubusercontent.com/lockys/Awesome.json/master/awesome/awesome.json"
 }
 AWESOME_PROVIDER = AwesomeLists(ENV["url"], LOGGER)
 
@@ -34,12 +33,6 @@ class KeywordQueryEventListener(EventListener):
         """React to user input"""
         items = []
 
-        github_access_token = extension.preferences['github_access_token']
-        if not github_access_token:
-            LOGGER.error("GitHub access token is required")
-            return
-
-        AWESOME_PROVIDER.set_token(github_access_token)
         AWESOME_PROVIDER.load()
 
         lists = AWESOME_PROVIDER.search(event.get_argument())

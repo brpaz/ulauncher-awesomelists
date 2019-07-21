@@ -2,13 +2,14 @@
 """
 import base64
 import json
-from urllib2 import urlopen, URLError
+from urllib.request import urlopen
+from urllib.error import URLError
 from threading import Timer
 
-class AwesomeLists(object):
+class AwesomeLists():
     """AwesomeLists service provider"""
     # We could maybe open this magic constant for user to configure
-    # but i think this is sensible default 
+    # but i think this is sensible default
     # value is in seconds
     _cache_expire_period = 60*60*24
     def __init__(self, url, logger):
@@ -22,20 +23,27 @@ class AwesomeLists(object):
         # fetch only if cache  is empty
         if not self.awesome_lists: 
             self.logger.info('Sending request for fresh awesome lists')
+            self.logger.info(self.url)
             try:
-                if not self.token:
-                    raise RuntimeError('Missing GitHub token')
-                response = urlopen(self.url + '?access_token=' + self.token)
+                response = urlopen(self.url)
                 json_response_body = json.loads(response.read())
-                base64_content = json_response_body["content"]
-                raw_content = base64.b64decode(base64_content)
-                
-                self.awesome_lists = json.loads(raw_content)
+
+                result = []
+                for _, lists in json_response_body.items():
+                  for aw_list in lists:
+                    result.append({
+                          'name': aw_list['name'],
+                          'description': aw_list['cate'],
+                          'url': aw_list['url']
+                    })
+
+                result = sorted(result, key=lambda item: item['name'])
+                self.awesome_lists = result
     
             except URLError as err:
                 self.logger.error(err)
             else:
-                if response != None:
+                if response is not None:
                     response.close()
 
                 def on_time():
@@ -51,7 +59,7 @@ class AwesomeLists(object):
 
     def search(self, search_term):
         """Search for awesome lists"""
-        term = search_term.strip().lower() if search_term != None else ''
+        term = search_term.strip().lower() if search_term is not None else ''
         
         if term == '':
             return self.awesome_lists
