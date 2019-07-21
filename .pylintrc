@@ -1,2 +1,2 @@
 [MESSAGES CONTROL]
-disable=import-error
+disable=import-error,no-self-use,too-few-public-methods

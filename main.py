@@ -11,7 +11,8 @@ from awesome_lists import AwesomeLists
 
 LOGGER = logging.getLogger(__name__)
 ENV = {
-    "url": "https://raw.githubusercontent.com/lockys/Awesome.json/master/awesome/awesome.json"
+    "url":
+    "https://raw.githubusercontent.com/lockys/Awesome.json/master/awesome/awesome.json"
 }
 AWESOME_PROVIDER = AwesomeLists(ENV["url"], LOGGER)
 
@@ -38,12 +39,12 @@ class KeywordQueryEventListener(EventListener):
         lists = AWESOME_PROVIDER.search(event.get_argument())
 
         for item in lists[:8]:
-            items.append(ExtensionResultItem(
-                icon='images/icon.png',
-                name=item["name"].strip().replace('\n', '-'),
-                description=item.get("description", ""),
-                on_enter=OpenUrlAction(item["url"])
-            ))
+            items.append(
+                ExtensionResultItem(icon='images/icon.png',
+                                    name=item["name"].strip().replace(
+                                        '\n', '-'),
+                                    description=item.get("description", ""),
+                                    on_enter=OpenUrlAction(item["url"])))
 
         return RenderResultListAction(items)
 
